@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 // Web Resource schema
 var ResourceSchema = new Schema({
 	resource: String,
-	resourceURL: String
+	resourceURL: String,
+	status: String,
 	crawledAt: Date,
 	createdAt: { type: Date, default: Date.now }
 });
