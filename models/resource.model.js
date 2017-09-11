@@ -6,8 +6,8 @@ var ResourceSchema = new Schema({
 	resource: String,
 	resourceURL: String,
 	status: String,
-	crawledAt: Date,
-	createdAt: { type: Date, default: Date.now }
+	lastCrawledAt: Date,
+	createdAt: { type: Date, default: Date.now },
 });
 
 // True since it is a parallel middleware
