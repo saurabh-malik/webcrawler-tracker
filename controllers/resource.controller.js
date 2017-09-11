@@ -1,4 +1,5 @@
 "use strict";
+var Publisher = require('../publishers/publisher.url')();
 
 var ResourceCtrl = function(Resource){
 
@@ -10,19 +11,25 @@ var ResourceCtrl = function(Resource){
 
 		//Store Resource to be crawled
 		var newResource = new Resource(req.body);
+		console.log("hi");
+
+		console.log(newResource);
+		console.log(req.body);
 		newResource.save(function(err, resource){
 			if(err){
 				res.json({status: false, error: err.message});
 				return;
 			}
+			//ToDo Logic to Initiate the Resource Crawling
+			Publisher.PublishNewURL(newResource);
 			res.json({status: true, resource: resource});
 		});
 
-		//ToDo Logic to Initiate the Resource Crawling
+		
 	}
 
 	ResourceObj.GetResources = function(req, res, next){
-		Resource.find(function(err, resources){
+		Resource.find(function(err, resources){	
 			if(err) {
 				res.json({status: false, error: "Something went wrong"});
 				return
@@ -30,6 +37,8 @@ var ResourceCtrl = function(Resource){
 			res.json({status: true, resources: resources});
 		});
 	}
+
+	
 
 	return ResourceObj;
 }
