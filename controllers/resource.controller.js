@@ -16,7 +16,7 @@ var ResourceCtrl = function(Resource){
 		console.log(newResource);
 		console.log(req.body);
 		//logic to get domain 
-		var domainName = extractRootDomain(newResource.resourceURL);
+		var domainName = extractHostname(newResource.resourceURL);
 		newResource.resource = domainName;
 
 		Resource.findOne({resource: domainName}, function(err,obj){
@@ -29,12 +29,14 @@ var ResourceCtrl = function(Resource){
 				console.log(obj.lastCrawledAt);
 				var crawledSince = (new Date()) - (new Date(obj.lastCrawledAt));
 				console.log("Not crawled since hrs: " + crawledSince);
-				if(crawledSince > 24*60*60*1000){
+				if(crawledSince > 60*60*1000){
+					obj.lastCrawledAt = Date.now();
+					obj.save({})
 					Publisher.PublishNewURL(newResource);
 					res.json({status: true, resource: newResource});
 				}
 				else {
-					res.json({status: false, message: "Already crawled in last 24 hrs"});
+					res.json({status: false, message: "Already crawled in last 1 hr"});
 				}
 			}
 			else{
@@ -90,9 +92,6 @@ var ResourceCtrl = function(Resource){
 	    hostname = hostname.split('?')[0];
 
 	    return hostname;
-	}
-
-	function saveNewResource(resource){
 	}
 
 	function startCrawler(newResource){
