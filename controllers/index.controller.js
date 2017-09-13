@@ -5,7 +5,9 @@ var IndexCtrl = function(){
 
 	IndexObj.IndexGet = function(req, res, next){
 
-		res.json({status: true, resource: {}});
+		res.render('../views/index', {
+	        title: "SMCrawler"
+	    });
 	}
 
 	return IndexObj;
