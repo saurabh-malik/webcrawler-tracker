@@ -90,6 +90,10 @@ var ResourceCtrl = function(Resource){
 	    hostname = hostname.split(':')[0];
 	    //find & remove "?"
 	    hostname = hostname.split('?')[0];
+	    //find & remove "wwww."
+	    if (url.indexOf("www.") > -1) {
+      		hostname = hostname.split("www.")[1];
+      	}
 
 	    return hostname;
 	}
