@@ -8,7 +8,7 @@ Requirement:
 
 Download the code and run following commands:
 - npm install
-- PORT=9090 run
+- PORT=9090 npm start
 
 webcrawler-tracker service must be up and running now to accept the resource as a request for web crawling.
 
